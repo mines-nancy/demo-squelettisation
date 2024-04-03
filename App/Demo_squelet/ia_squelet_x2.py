@@ -46,12 +46,19 @@ def cameraSelection(vecteurVideo):
     return switch_case(vecteurVideo) 
 
 def switch_case(argument):
-    switcher = {
-		'nano2': 'udpsrc port=12000 ! application/x-rtp, payload=96 ! rtpjitterbuffer ! rtph264depay ! avdec_h264 ! videoconvert ! videoscale ! video/x-raw, width=1920,height=1080 ! appsink',
-        'o11': 'rtspsrc location=rtsp://192.168.70.6:8080/h264_ulaw.sdp latency=100 ! queue ! rtph264depay ! avdec_h264 ! videoconvert ! videoscale ! video/x-raw,width=1280,height=720,format=BGR ! appsink drop=1',
-        'prompt_rtsp_ip': 'rtspsrc location=rtsp://'+input("Please enter the device's IP address")+':8080/h264_ulaw.sdp latency=100 ! queue ! rtph264depay ! avdec_h264 ! videoconvert ! videoscale ! video/x-raw,width=1280,height=720,format=BGR ! appsink drop=1'
-        }
-    return switcher.get(argument, 'Option invalide')    
+	match argument:
+		case 'nano2':
+			return 'rtspsrc location=rtsp://100.75.153.134:8554/camera latency=100 ! queue ! rtph265depay ! avdec_h265 ! videoconvert ! video/x-raw,format=BGR ! appsink drop=1'
+		case 'o11':
+			return 'rtspsrc location=rtsp://192.168.50.205:8080/h264_ulaw.sdp latency=100 ! queue ! rtph264depay ! avdec_h264 ! videoconvert ! videoscale ! video/x-raw,width=1280,height=720,format=BGR ! appsink drop=1'
+		case 'prompt_ip_webcam':
+			print("Please enter the device's IP address")
+			return 'rtspsrc location=rtsp://'+input()+':8080/h264_ulaw.sdp latency=100 ! queue ! rtph264depay ! avdec_h264 ! videoconvert ! videoscale ! video/x-raw,width=1280,height=720,format=BGR ! appsink drop=1'
+		case 'prompt_rtsp':
+			print("Please enter the full link")
+			return  'rtspsrc location='+input()+' latency=100 ! queue ! rtph264depay ! avdec_h264 ! videoconvert ! videoscale ! video/x-raw,width=1280,height=720,format=BGR ! appsink drop=1'
+		case _:
+			return 'Option invalide' 
 
 
 def detection(args):

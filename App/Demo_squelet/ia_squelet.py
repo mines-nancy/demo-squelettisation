@@ -48,7 +48,7 @@ def cameraSelection(vecteurVideo):
 def switch_case(argument):
 	match argument:
 		case 'nano2':
-			return 'udpsrc port=12000 ! application/x-rtp, payload=96 ! rtpjitterbuffer ! rtph264depay ! avdec_h264 ! videoconvert ! videoscale ! video/x-raw, width=640,height=480 ! appsink'
+			return 'rtspsrc location=rtsp://100.75.153.134:8554/camera latency=100 ! queue ! rtph265depay ! avdec_h265 ! videoconvert ! video/x-raw,format=BGR ! appsink drop=1'
 		case 'o11':
 			return 'rtspsrc location=rtsp://192.168.50.205:8080/h264_ulaw.sdp latency=100 ! queue ! rtph264depay ! avdec_h264 ! videoconvert ! videoscale ! video/x-raw,width=1280,height=720,format=BGR ! appsink drop=1'
 		case 'prompt_ip_webcam':
