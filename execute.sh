@@ -13,7 +13,7 @@ execute_docker () {
 			;;
 		esac
 	fi
-	echo $'What would you like to do?\n1. Execute with webcam\n2. Execute with phone app "IP Webcam"\n3. Execute with nano2 5G box\n4. Execute with another RTSP source'
+	echo $'What would you like to do?\n1. Execute with webcam\n2. Execute with phone app "IP Webcam"\n3. Execute with nano2 5G box\n4. Execute with another H264 RTSP source\n5. Execute with another H265 RTSP source'
 	read choice
 	case $choice in
 	1)
@@ -30,7 +30,11 @@ execute_docker () {
 		;;
 	4)
 		echo 'The container is starting... (please wait for it to prompt for link)'
-		docker run -i --rm --network host --gpus all -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix $image_name:$installed_version python3 Demo_squelet/ia_squelet.py --source prompt_rtsp
+		docker run -i --rm --network host --gpus all -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix $image_name:$installed_version python3 Demo_squelet/ia_squelet.py --source prompt_rtsp_h264
+		;;
+	5)
+		echo 'The container is starting... (please wait for it to prompt for link)'
+		docker run -i --rm --network host --gpus all -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix $image_name:$installed_version python3 Demo_squelet/ia_squelet.py --source prompt_rtsp_h265
 		;;
 	*)
 		echo 'Wrong choice'

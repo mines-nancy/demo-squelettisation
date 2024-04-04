@@ -54,9 +54,12 @@ def switch_case(argument):
 		case 'prompt_ip_webcam':
 			print("Please enter the device's IP address")
 			return 'rtspsrc location=rtsp://'+input()+':8080/h264_ulaw.sdp latency=100 ! queue ! rtph264depay ! avdec_h264 ! videoconvert ! videoscale ! video/x-raw,width=1280,height=720,format=BGR ! appsink drop=1'
-		case 'prompt_rtsp':
+		case 'prompt_rtsp_h264':
 			print("Please enter the full link")
-			return  'rtspsrc location='+input()+' latency=100 ! queue ! rtph264depay ! avdec_h264 ! videoconvert ! videoscale ! video/x-raw,width=1280,height=720,format=BGR ! appsink drop=1'
+			return 'rtspsrc location='+input()+' latency=100 ! queue ! rtph264depay ! avdec_h264 ! videoconvert ! video/x-raw,format=BGR ! appsink drop=1'
+		case 'prompt_rtsp_h265':
+			print("Please enter the full link")
+			return 'rtspsrc location='+input()+' latency=100 ! queue ! rtph265depay ! avdec_h265 ! videoconvert ! video/x-raw,format=BGR ! appsink drop=1'
 		case _:
 			return 'Option invalide' 
 
